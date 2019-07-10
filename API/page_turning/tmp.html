@@ -1,0 +1,321 @@
+<!DOCTYPE html><html class="no-js"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="&lt;%global.metakeyword%&gt;">
+    <meta name="description" content="&lt;%global.metadescription%&gt;">
+    <!-- <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />-->
+    <title>H5&#x4EE3;&#x7801;&#x751F;&#x6210;&#x5668;</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <link rel="stylesheet" href="../nodeH5/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="../nodeH5/assets/css/reset.css">
+    <link rel="stylesheet" href="../nodeH5/assets/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="../nodeH5/assets/css/select2.min.css">
+    <link rel="stylesheet" href="../nodeH5/assets/css/app.css">
+    <link rel="stylesheet" href="http://special.zhaopin.com/dscpro/css/animate.min.css">
+    <link rel="stylesheet" href="../nodeH5/assets/css/swiper-3.4.2.min.css">
+
+</head>
+<body class="pos-rel my-body">
+
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-sm-2">
+            <div style="visibility: hidden">dafasdfasfasdfffffffffffffffffad</div>
+            <div class="am-form left-tool">
+                <fieldset>
+                    <legend class="am-text-danger am-text-sm">基本</legend>
+                    <ul class="am-avg-sm-3 boxes">
+                        <li class="box box-1" id="hide_ele" title="隐藏选择元素">隐藏</li>
+                        <li class="box box-2" id="show_ele" title="显示本页隐藏元素">显示</li>
+                        <li class="box box-3" id="copy_ele" title="复制所选元素">复制</li>
+                        <li class="box box-4" id="insert_ele" title="粘贴复制元素">粘贴</li>
+                        <li class="box box-5" id="delete_ele" title="删除所选元素">删除</li>
+                    </ul>
+                    <p>
+                        <button type="button" id="downloadHtml" class="am-btn am-btn-success">下载</button>
+
+                    </p>
+
+
+                </fieldset>
+            </div>
+        </div>
+        <div class="am-u-sm-8" id="editor">
+            <div id="phone">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper" id="swiperView">
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="html"></div>
+            <div class="ruler ruler-hr"></div>
+            <div class="ruler ruler-ve"></div>
+            <!--  <div class="content-line"></div>-->
+
+        </div>
+        <div class="am-u-sm-2">
+            <div class="animation-sel" style="display: block">
+                <div class="am-form">
+                    <fieldset class="right-pre-animate">
+                        <legend class="am-text-danger am-text-sm">预定义动画</legend>
+                        <div class="am-form animation-sel-velocity animate-set" style="display: block">
+                            <div class="am-form-group">
+                                <select class="js-example-basic-single" name="state">
+                                    <optgroup label="&#x5E38;&#x7528;" id="default_select_option"></optgroup>
+                                    <optgroup label="&#x81EA;&#x5B9A;&#x4E49;" id="my_select_option"></optgroup>
+                                </select>
+                                <span class="am-form-caret"></span>
+                            </div>
+                            <div class="am-form-group">
+
+                                <input type="text" class="am-form-field" style="font-size: 12px" id="duration" placeholder="duration">
+
+                            </div>
+                            <div class="am-form-group">
+                                <input type="text" class="am-form-field" style="font-size: 12px" id="delay" placeholder="delay">
+                            </div>
+
+                        </div>
+                    </fieldset>
+                    <fieldset class="right-pre-animate am-margin-top">
+                        <legend class="am-text-danger am-text-sm">使用上次动画(ms)</legend>
+                        <div class="am-form-group">
+                            <ul class="am-avg-sm-3 boxes">
+                                <li class="box box-1 apply-animate-last" data="0">0</li>
+                                <li class="box box-1 apply-animate-last" data="50">50</li>
+                                <li class="box box-1 apply-animate-last" data="100">100</li>
+                                <li class="box box-1 apply-animate-last" data="150">150</li>
+                                <li class="box box-1 apply-animate-last" data="200">200</li>
+                                <li class="box box-1 apply-animate-last" data="250">250</li>
+                                <li class="box box-1 apply-animate-last" data="300">300</li>
+                                <li class="box box-1 apply-animate-last" data="350">350</li>
+                                <li class="box box-1 apply-animate-last" data="400">400</li>
+                                <li class="box box-1 apply-animate-last" data="450">450</li>
+                                <li class="box box-1 apply-animate-last" data="500">500</li>
+                                <li class="box box-1 apply-animate-last" data="550">550</li>
+
+                            </ul>
+                        </div>
+                    </fieldset>
+                    <fieldset class="right-pre-animate am-margin-top">
+                        <legend class="am-text-danger am-text-sm">操作动画</legend>
+                        <div class="am-form-group">
+                            <ul class="am-avg-sm-3 boxes">
+                                <li class="box box-1 " title="删除动画" id="delete_animate">删除</li>
+                                <li class="box box-1 " title="复制动画" id="copy_animate">复制</li>
+                                <li class="box box-1 " title="拷贝动画" id="apply_animate">拷贝</li>
+
+                            </ul>
+                        </div>
+
+                    </fieldset>
+                    <fieldset class="right-pre-animate am-margin-top">
+                        <legend class="am-text-danger am-text-sm">循环动画</legend>
+                        <div class="am-form-group">
+                            <ul class="am-avg-sm-3 boxes">
+                                <li class="box box-1 " title="添加动画" id="add_animate_loop">添加</li>
+                                <li class="box box-1 " title="重置动画" id="reset_animate_loop">删除</li>
+                                <!-- <li class="box box-1 " title="复制动画" id="copy_animate">复制</li>
+                                 <li class="box box-1 " title="拷贝动画" id="apply_animate">拷贝</li>-->
+
+                            </ul>
+                        </div>
+                    </fieldset>
+                    <fieldset class="right-pre-animate am-margin-top">
+                        <legend class="am-text-danger am-text-sm">模板动画</legend>
+                        <div class="am-form-group">
+                            <input type="text" class="am-form-field" style="font-size: 12px" id="ai_delay" placeholder="delay">
+                        </div>
+                        <div class="am-form-group">
+                            <input type="text" class="am-form-field" style="font-size: 12px" id="ai_duration" placeholder="duration">
+                        </div>
+                        <div class="am-form-group am-margin-top">
+                            <ul class="am-avg-sm-3 boxes">
+                                <li class="box box-1 " title="模板动画" id="ai_animate">应用</li>
+                            </ul>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="am-modal am-modal-no-btn" tabindex="-1" id="animate_loop_modal">
+            <div class="am-modal-dialog" style="width: 1000px;height: 80%">
+                <div class="am-modal-hd">循环动画配置
+                    <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+                </div>
+                <div class="am-modal-bd">
+                    <div class="am-g am-text-center">
+
+                        <div class="am-u-sm-9 ">
+                            <div class="am-vertical-align" style="height: 600px"> <img src="" id="operate_img" class="am-vertical-align-middle" alt=""></div>
+                        </div>
+                        <div class="am-u-sm-3">
+                            <div class="am-form">
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">属性</div>
+                                    <div class="am-u-sm-4">开始</div>
+                                    <div class="am-u-sm-4">结束</div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4"><span class="am-padding-top-xs am-inline-block">translateX:</span></div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="translateX" >
+                                        </div>
+
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text"  class="translateX" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block">translateY:</span>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text"  class="translateY">
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="translateY">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block">scaleX:</span>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="scaleX">
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="scaleX">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block">scaleY:</span>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="scaleY">
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="scaleY">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block">opacity:</span>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="opacity">
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group" >
+                                            <input type="text" class="opacity">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block"> rotateZ:</span>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="rotateZ" >
+                                        </div>
+                                    </div>
+                                    <div class="am-u-sm-4">
+                                        <div class="am-form-group">
+                                            <input type="text" class="rotateZ" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block"> duration:</span>
+                                    </div>
+                                    <div class="am-u-sm-8">
+                                        <div class="am-form-group">
+                                            <input type="number" id="loop_duration" >
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block"> easing:</span>
+                                    </div>
+                                    <div class="am-u-sm-8">
+                                        <div class="am-form-group">
+                                            <input type="text" id="loop_easing" >
+                                            <span class="am-text-primary" style="font-size: 12px"><a href="https://easings.net/" class="am-text-danger"  target="_blank">参考</a>默认linear</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-g">
+                                    <div class="am-u-sm-4">
+                                        <span class="am-padding-top-xs am-inline-block"> loop:</span>
+                                    </div>
+                                    <div class="am-u-sm-8">
+                                        <div class="am-form-group">
+                                            <input type="text" id="loop_loop" >
+                                            <span  class="am-text-primary " style="font-size: 12px">默认200,0表示无限</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="am-g">
+                                    <div am-u-sm-12>
+                                        <button class="am-btn am-btn-secondary" id="loop_rest">重置</button>
+                                        <button class="am-btn am-btn-secondary" id="loop_pre">预览</button>
+                                        <button class="am-btn am-btn-secondary" id="loop_apply">应用</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../nodeH5/assets/js/jquery-2.0.0.min.js"></script>
+<script src="../nodeH5/assets/js/swiper-3.4.2.min.js"></script>
+<script src="../nodeH5/assets/js/velocity.js"></script>
+<script src="../nodeH5/assets/js/velocity.ui.js"></script>
+<script src="../nodeH5/assets/js/animate.js"></script>
+<script src="../nodeH5/assets/js/amazeui.min.js"></script>
+<script src="../nodeH5/assets/js/sweetalert2.all.min.js"></script>
+<script src="../nodeH5/assets/js/select2.min.js"></script>
+<script src="../nodeH5/assets/js/clipboard.min.js "></script>
+<script src="../nodeH5/assets/js/lodash.js"></script>
+<script src="../nodeH5/assets/js/h5create.js"></script>
+<script src="/assets/js/axios.min.js"></script>
+
+
+</body></html>

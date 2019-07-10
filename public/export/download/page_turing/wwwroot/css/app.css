@@ -1,0 +1,20 @@
+body{position: fixed;width: 100%;height: 100%;left: 0;top: 0;bottom: 0;right: 0}
+.animate{opacity: 0}
+.arrow{width: 1rem!important;bottom: 0px!important;left: 4.85rem!important;z-index: 999}
+.image{}
+.pos-abs{position: absolute}
+.pos-rel{position: relative}
+.logo{width: 3rem !important;left: 4.5rem !important;}
+.logo1{width: 2.5rem !important;left: 1.5rem !important;}
+img{position: absolute}
+
+.swiper-slide{background:center no-repeat;background-size:cover;position: relative;overflow: hidden}
+
+.full-page{
+    position: absolute;left: 0;top: 0%;width: 100%;height: 100%
+}
+.dn1{display: none}
+.dn3{display: none}
+#scroll::-webkit-scrollbar{width: 1px;height: 0;}
+.Center{left: 0!important;right: 0!important;margin: 0 auto}
+/*第一页*/
