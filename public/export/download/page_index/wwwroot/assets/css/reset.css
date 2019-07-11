@@ -1,0 +1,76 @@
+/*===== ���Ĭ�ϵ�margin������ֵ =====*/
+img{border: none;}
+body,
+blockquote,
+dd,
+dl,
+figure,
+form,
+p,
+pre,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {margin:0;}
+ul li{list-style: none;}
+/*===== ͳһ�����б��margin��padding���Լ��б����ʽ =====*/
+.clefix{content:".";display:block;clear:both;visibility: hidden;height:0 !important;}
+menu,
+ul,
+ol {list-style:none;margin:0;padding:0;}
+
+/*===== ȫ�ֶ��������Լ�ҳ�汳�� =====*/
+body {line-height:1.5;background-color:#FFFFFF;}
+body,h1,h2,h3,h4,h5,h6,input,button,select,textarea {font-size: 14px;} /* ���������С */
+
+
+input[type="submit"],
+input[type="reset"] {font-size: 16px;} /* ���������С���ⲿ�ָ�ǰ��д��һ��IE6�л���Ч */
+input[type="button"]{font-size: 12px}
+/*===== ������� =====*/
+
+/*===== ����iframe�ı���ɫ�Լ�ȥ�����������iframe�ײ��ļ������� =====*/
+iframe {background-color:#FFFFFF;vertical-align:middle;}
+
+/*===== �����ı�������ʽ =====*/
+a {color:#000000;text-decoration: none;cursor:pointer;}
+/*a:hover {text-decoration:underline;color:#f2ad1a;}*/
+
+/*===== ȥ�����������ͼƬ�ײ��ļ������أ��Լ�����ͼƬ��ʽ�����ޱ߿� =====*/
+img {vertical-align:middle;}
+a img {border:0 none;}
+
+/*===== ���ñ�Ԫ�ص���ʽ =====*/
+
+fieldset {margin:0;padding:0;}
+legend {color:windowtext;} /* ���ñ��򲿷ֵ�������ɫΪϵͳ�����ı���ɫ */
+button,
+input.ie6 {overflow:visible;padding:.1em .25em;cursor:pointer;} /* ����ͳһ��ť�Ĵ�С������IE6��֧�֡�����ѡ�����������ʹ��һ������������ */
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {overflow:visible;padding:.1em .25em;cursor:pointer;} /* ����ͬ�ⰴť�Ĵ�С���������input��ʽ���İ�ť */
+input[type="text"],
+select,
+textarea {background-color:#FFFFFF;} /* ͳһ�ı�������������ı���ı���ɫ�����ⱻ�û�����ϵͳ��ɫ���ƻ�ҳ��ɫ�� */
+select {border:1px inset;} /* ͳһ�����ı߿� */
+textarea {overflow:auto;vertical-align:text-bottom;*vertical-align:auto;border:1px solid;resize:vertical;} /* ������Ϊauto�����ܱߵ�Ԫ�ض��뷽ʽ������hack������IE6&7��vertical-alignӰ�췶Χ�����resizeΪ���¿��������������������ƻ�ҳ�沼�֣�������Ҫ��������Ϊnone */
+
+/*===== ���ñ��Ԫ�ص���ʽ =====*/
+table {border-spacing:0;border-collapse:collapse;} /* �ϲ����ļ�϶��ȥ����Ԫ��֮��ļ�࣬������Ҫ�ϲ���Ԫ��Ϊϸ�߱�񣬿����� border-collapse:collapse; */
+td, th, caption,input {padding:0;} /* ȥ����Ԫ���Լ�caption��ͷ��paddingֵ */
+.pos-rel{position: relative}
+.pos-abs{position: absolute}
+.max-img{width: 100%}
+.am-container{background: white;max-width: 1200px;min-width: 1200px;padding: 0rem;margin: 0 auto}
+.am-container-1000{max-width: 1000px;min-width: 1000px;padding: 0rem;margin: 0 auto}
+.am-container>.am-g{width: auto;
+     margin-left: 0rem;
+     margin-right: 0rem; }
+.am-text-indent{text-indent: 2em;font-size: 16px;color: #7c7c7c}
+.fw-6{font-weight: 600}
+.fw-5{font-weight: 500}
+.fw-4{font-weight: 400}
+.fw-b{font-weight: bold}
+.fw-bb{font-weight: bolder}

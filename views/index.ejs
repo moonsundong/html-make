@@ -32,7 +32,7 @@
                 <div class="am-form-group">
                   <input type="text" class="" id="psd_path_2" placeholder="输入psd文件绝对路径">
                 </div>
-                <button class="am-btn am-btn-primary">
+                <button class="am-btn am-btn-primary" id="make_psd_2">
                   立即制作
                 </button>
               </div>
@@ -117,6 +117,27 @@
                     });
             }
         });
+        $('#make_psd_2').on('click',function () {
+            var val= $(this).prev().find('input').val()
+            if(!val){
+                $('#my-alert').modal('open')
+            }else {
+                $('#my-modal-loading').modal('open')
+                axios.post('/page_index', {
+                    path:val
+                })
+                    .then(function (response) {
+
+                        if(response.status == 200){
+                            window.location.href = response.data.url
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        });
+
     </script>
   </body>
 </html>

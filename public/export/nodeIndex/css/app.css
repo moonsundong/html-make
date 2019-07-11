@@ -1,0 +1,21 @@
+.am-container{max-width: 1400px;min-width: 1400px}
+.wrap{position: relative;width: 100%;left: 0;top: 0;overflow: hidden}
+.act{outline: 1px dashed red}
+#menu {
+    display: none;
+    position: absolute;
+    background-color: #FF0000;
+    z-index: 99999;
+    width: 200px;left: 0;top: 0;
+    border: 1px solid #eeeeee;
+}
+
+#menu  li {
+    list-style: none;
+}
+.dn{display: none!important;}
+.boxes .box{height: 50px;text-align: center;outline: 1px solid #eeeeee;line-height: 50px;cursor: pointer}
+.boxes .box:hover{background: #0a628f;color: white;}
+.right-pre-animate .am-form-group{margin-bottom: 0}
+.apply-animate-last{height: 50px;line-height: 50px;width: 49px}
+#operate_img{}
