@@ -1,0 +1,455 @@
+<html class="no-js">
+
+<head>
+    <meta charset="gb2312">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content>
+    <meta name="keywords" content>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>test</title>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+    <style>
+        #scroll .mCSB_dragger .mCSB_dragger_bar {
+            background: #411f13;
+        }
+
+        .mCSB_inside>.mCSB_container {
+            margin-right: 10px;
+        }
+
+        .logo {
+            width: 7.5rem !important;
+        }
+
+        .input input {
+            position: absolute;
+            left: 3.8rem;
+            width: 5.2rem;
+            background: red;
+            top: 5.1rem;
+            height: 0.95rem;
+            background: none;
+            border: none
+        }
+
+        .arrow {
+            bottom: 0rem !important;
+        }
+
+        .alert {
+            display: none
+        }
+
+        .alert img {
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <!--GoogleAnalytics-->
+    <span style="display: none">&lt;%global.GoogleAnalytics%&gt;</span>
+    <div class="loadwrap" style>
+        <div id="caseBlanche">
+            <div id="rond">
+                <div id="test"></div>
+            </div>
+            <div id="load" style="text-align: center;left: 85%;top: 95%">
+                <i style="font-size: 0.4rem;font-weight: bold;color: black"><img src="images/zhaopin.png" style="position: absolute;left: 0rem;top: -1rem" alt></i>
+            </div>
+            <div class="loading" style>Loading <br>...<br><br><span>0</span>%</div>
+        </div>
+    </div>
+    <!-- Music -->
+    <div id="m_ctrl" class="on" style="z-index: 9999;display: none">
+        <i></i>
+    </div>
+    <audio id="audio" src="images/bgm.mp3" loop></audio>
+    <div id="content" style>
+        <div class="swiper-container">
+            <div class="swiper-wrapper " id="swiperView">
+
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/common.js"></script>
+    <script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="//special.zhaopin.com/dscpro/js/sha1.js"></script>
+    <script src="js/swiper-3.4.2.min.js"></script>
+    <script src="js/velocity.js"></script>
+    <script src="js/velocity.ui.js"></script>
+    <script src="js/animate.js"></script>
+    <script src="js/wx.js"></script>
+    <script>
+        var animateSet = {};
+
+        function resetAimate() {
+            $('#swiperView').children('.swiper-slide').each(function(index, item) {
+                var funStr = '';
+                var loopFunStr = '';
+                $(item).find('.animate').each(function() {
+                    var imgSrc = $(this).attr('src');
+                    var animate = $(this).attr('animate') || 'transition.bounceUpIn';
+                    var duration = $(this).attr('duration') || 750;
+                    var delay = $(this).attr('delay') || 500;
+                    if (animate) {
+                        funStr += `$('[src="` + imgSrc + `"]').velocity("` + animate + `",{duration:` + duration + `,delay:` + delay + `});`
+                    }
+                });
+                $(item).find('.loop').each(function() {
+                    if ($(this).attr('animateLoop')) {
+                        var imgSrc = $(this).attr('src');
+                        var loopObj = JSON.parse($(this).attr('animateLoop'));
+                        if (loopObj.runStatus) {
+                            $(this).velocity(loopObj.animate, loopObj.opt)
+                        } else {
+                            var animate = JSON.stringify(loopObj.animate)
+                            var opt = JSON.stringify(loopObj.opt);
+                            console.log(animate, opt);
+                            loopFunStr += `$('[src="` + imgSrc + `"]').velocity(` + animate + `,` + opt + `);`
+                        }
+                    }
+                });
+                animateSet['animate' + index] = new Function('', funStr);
+                animateSet['loop' + index] = new Function('', loopFunStr);
+            });
+        }
+        resetAimate();
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'vertical',
+            initialSlide: 0,
+            loop: false,
+            hashnav: window.location.href.indexOf('special') < 0,
+            noSwiping: true,
+            noSwipingClass: 'stop-swiping',
+            onSlideChangeStart: function() {
+
+            },
+            onSlideChangeEnd: function(swiper) {
+                eval("animateSet.loop" + swiper.realIndex + '()');
+            },
+            onSlidePrevStart: function(swiper) {
+                $('.swiper-slide').eq(swiper.realIndex + 1).find('.animate').velocity('finish', true).velocity({
+                    opacity: 0
+                }, {
+                    "display": "none",
+                    duration: 0
+                });
+                eval("animateSet.animate" + swiper.realIndex + '()');
+            },
+            onSlideNextStart: function(swiper) {
+                $('.swiper-slide').eq(swiper.realIndex - 1).find('.animate').velocity("finish", true).velocity({
+                    opacity: 0
+                }, {
+                    "display": "none",
+                    duration: 0
+                });
+                eval("animateSet.animate" + swiper.realIndex + '()');
+            }
+        });
+        if (mySwiper.realIndex == 0) {
+            var timer = setInterval(function() {
+                if ($('.loadwrap').css('display') == 'none') {
+                    animateSet.animate0();
+                    clearInterval(timer);
+                    animateSet.loop0();
+                }
+            }, 0);
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
