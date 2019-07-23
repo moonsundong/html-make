@@ -16,7 +16,7 @@ var $wrap = null;
 var content = null;
 var PSD_WIDTH = 75;
 var url ='/';
-
+var compress_images = require('compress-images')
 router.post('/page_turning',function (req,res,next) {
     var pspath = req.body.path;
     class exportPSD {
@@ -96,7 +96,6 @@ router.post('/page_turning',function (req,res,next) {
                 console.log("export start...");
                 psd = PSD.fromFile(_self.file);
                 _self.mkdir(_self.file);
-
             });
         };
         /**
@@ -223,6 +222,8 @@ router.post('/page_turning',function (req,res,next) {
             var newArr = children.reverse();
             children = newArr;
         };
+        /*compressimages*/
+
         start(){
             console.log(this)
             var _self = this;
@@ -246,6 +247,7 @@ router.post('/page_turning',function (req,res,next) {
 
 });
 router.post('/page_turning/download',function (req,res,next) {
+    console.log(req.body.compress)
     var html = req.body.html;
     function delDir(path){
         let files = [];
@@ -267,29 +269,66 @@ router.post('/page_turning/download',function (req,res,next) {
         var $$ = cheerio.load(htmlString);
         var $insertArea = $$("#swiperView");
         $insertArea.html(html);
+       
         fs.writeFile('./public/export/download/page_turing/wwwroot/index.html',beautify_html($$.html(), { indent_size: 4, space_in_empty_paren: true }), {
         }, function (err) {
             if(err) throw err;
              if(!err){
-                 delDir('./public/export/download/page_turing/wwwroot/images')
-                 fse.copy('./public/export/page_turning/images', './public/export/download/page_turing/wwwroot/images')
-                         .then(() => {
-                             fse.copy('./public/export/download/page_turing/commonimages','./public/export/download/page_turing/wwwroot/images')
-                                 .then(()=>{
-                                     compressing.zip.compressDir('./public/export/download/page_turing/wwwroot', './public/export/download/page_turing/wwwwroot.zip')
-                                         .then(()=>{
-                                             res.send({url:'/export/download/page_turing/wwwwroot.zip'})
-                                         })
-                                         .catch()
-                                 })
-                                 .catch(error=>{
-                                     console.log(error)
-                                 })
+                 delDir('./public/export/download/page_turing/wwwroot/images');
+                 delDir('./public/export/page_turning/compressimages');
+                 fs.mkdirSync('./public/export/page_turning/compressimages')
+                 fs.readdir('./public/export/page_turning/images',function (err,files) {
 
-                         })
-                         .catch(err => {
-                             console.error(err)
-                         })
+                     files.forEach(function (value, index, array) {
+
+
+                     });
+                     var len = files.length;
+                     var begin =0 ;
+
+
+                     function compress() {
+                         compress_images("./public/export/page_turning/images/"+files[begin], "./public/export/page_turning/compressimages/", {compress_force: false, statistic: true, autoupdate: true}, false,
+                             {jpg: {engine: 'mozjpeg', command: ['-quality', '60']}},
+                             {png: {engine: 'pngquant', command: ['--quality=20-50']}},
+                             {svg: {engine: 'svgo', command: '--multipass'}},
+                             {gif: {engine: 'gifsicle', command: ['--colors', '64', '--use-col=web']}}, function(error, completed, statistic){
+                                 /* console.log('-------------');
+                                  console.log(error);
+                                  console.log(completed);
+                                  console.log(statistic);
+                                  console.log('-------------');*/
+                                 begin++;
+                                 if(!err && begin<len ){
+                                    compress()
+                                 }else if(begin === len){
+                                     fse.copy('./public/export/page_turning/compressimages', './public/export/download/page_turing/wwwroot/images')
+                                         .then(() => {
+                                             fse.copy('./public/export/download/page_turing/commonimages','./public/export/download/page_turing/wwwroot/images')
+                                                 .then(()=>{
+                                                     compressing.zip.compressDir('./public/export/download/page_turing/wwwroot', './public/export/download/page_turing/wwwwroot.zip')
+                                                         .then(()=>{
+                                                             res.send({url:'/export/download/page_turing/wwwwroot.zip'})
+                                                         })
+                                                         .catch()
+                                                 })
+                                                 .catch(error=>{
+                                                     console.log(error)
+                                                 })
+
+                                         })
+                                         .catch(err => {
+                                             console.error(err)
+                                         })
+                                 }else{
+                                     return console.log(err)
+                                 }
+                             })
+                     }
+                     compress()
+                 });
+
+
                  }
 
         });
@@ -297,5 +336,5 @@ router.post('/page_turning/download',function (req,res,next) {
     });
 
 
-})
+});
 module.exports=router

@@ -350,7 +350,6 @@
         $('#operate_img').removeAttr('style');
         $('.act').velocity('stop',true).velocity('finish',true);
         $('.act').velocity({translateX:0,translateY:0,scaleX:1,scaleY:1,opacity:1,rotateZ:0},{duration:0});
-
         $('.act').attr('animateLoop',JSON.stringify(LOOP));
         console.log(LOOP.runStatus)
         if(LOOP.runStatus){
@@ -499,14 +498,16 @@
         $('.html img').removeAttr('style');
         $('.html .swiper-slide').removeClass('swiper-slide-active swiper-slide-next swiper-slide-prev');
         $('.html .swiper-slide').removeAttr('style');
-
-       var html =  $('.html').html()
+        var html =  $('.html').html();
+        $('#my-modal-loading').modal('open')
         axios.post('/page_turning/download', {
-            html:html
+            html:html,
+            compress:$('#compress_img').val() || 100,
         })
             .then(function (response) {
                 if(response.status == 200){
-                    console.log(response.data.url)
+                    $('#my-modal-loading').modal('close');
+                    console.log(response.data.url);
                     window.location.href = response.data.url
                 }
             })

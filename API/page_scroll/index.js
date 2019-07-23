@@ -1,11 +1,9 @@
 
 var express = require('express');
 var router = express.Router();
-
 var compressing = require('compressing');
 var beautify_html = require('js-beautify').html;
 var PSD = require('psd');
-const uuidv4 = require('uuid/v4');
 var fs = require("fs");
 var cheerio=require('cheerio');
 var fse = require('fs-extra')
@@ -18,8 +16,7 @@ var $wrap = null;
 var content = null;
 var PSD_WIDTH = 75;
 var url ='/';
-
-router.post('/page_index',function (req,res,next) {
+router.post('/page_scroll',function (req,res,next) {
     var pspath = req.body.path;
     class exportPSD {
         constructor(){
@@ -34,15 +31,15 @@ router.post('/page_index',function (req,res,next) {
             this.cssStyle = ''; //css字符串
             this.file = pspath;
             this.appName = '';
-            this.fileName = 'page_index';
+            this.fileName = 'page_scroll';
             this.viewRect = {};
+            this.height=[];
         };
 
         /**
          * 创建目录
          * @param dirName
          */
-
         mkdir(dirName){
             var _self = this;
             var dir = _self.fileName;
@@ -63,6 +60,8 @@ router.post('/page_index',function (req,res,next) {
                 });
 
             });
+
+
 
         };
 
@@ -89,14 +88,15 @@ router.post('/page_index',function (req,res,next) {
         getPageHTML(){
             var _self = this;
             var divRoot = _self.file.replace(".", "");
-            fs.readFile("./API/page_index/tmp.html", function (err, data) {
+            fs.readFile("./API/page_scroll/tmp.html", function (err, data) {
                 var htmlString = data.toString();
                 $ = cheerio.load(htmlString);
-                $wrap = $(".wrap");
+                $wrap = $("#scroll");
                 content = $wrap
                 console.log("export start...");
                 psd = PSD.fromFile(_self.file);
                 _self.mkdir(_self.file);
+
             });
         };
         /**
@@ -121,7 +121,7 @@ router.post('/page_index',function (req,res,next) {
                         return false;
                     }
                     if (node.layer.visible){
-                        node.name = "dv_" + _self.appName + "_layer_" + _self.pngId;
+                        node.name = _self.appName + _self.pngId;
                         node.saveAsPng(_self.saveImgPath + node.name + ".png").catch(function (err) {
                             //console.log(err.stack);
                         });
@@ -139,8 +139,11 @@ router.post('/page_index',function (req,res,next) {
 
                 //生成结构
                 var domJSON = tree.export();
+                console.log(domJSON)
                 _self.createDivByJson(domJSON);
-
+                var common = content.find('.swiper-wrapper>img');
+                content.find('.swiper-wrapper>img').remove();
+                content.find('.swiper-slide').prepend(common)
                 //写入生成好的html结构
                 fs.writeFile(_self.exportAppPath+"index.html", $.html(), {
                     encoding:"utf8"
@@ -158,7 +161,8 @@ router.post('/page_index',function (req,res,next) {
                 //return psd.image.saveAsPng('./output.png');
             }).then(function () {
                 var time = (new Date()) - _self.oldTime;
-                res.send({url:'/export/page_index'})
+                url= _self.appName;
+                res.send({url:'/export/page_scroll'})
                 console.log("export end!");
                 console.log("end time:"+time+"ms");
             }).catch(function (err) {
@@ -170,29 +174,34 @@ router.post('/page_index',function (req,res,next) {
          * 根据json数据生成结构
          * @param jsons
          */
+
         createDivByJson(jsons) {
             var _self = this;
             var domJSON = jsons;
-            var backGroundImgUrl = "images/";
+            var imgSrcUrl = "images/";
             var childrenLen = domJSON.children.length;
             for (var i=0; i<domJSON.children.length; i++){
                 var item = domJSON.children[i];
+               // console.log(item)
                 if (item.type == "layer" && item.visible && item.width && item.height){
-                    var layer = '<div class="animate ' +item.name +'" id="'+uuidv4()+'"></div>\n';
-                    _self.cssStyle+= ' .' + item.name +' { position: absolute; top:'+item.top+'px; width:'+ item.width +'px; height:'+ item.height +'px; left:'+ item.left +'px;'+ 'background:url(../'+ (backGroundImgUrl+item.name) +'.png); background-size:100% auto; }\n';
+                    this.height.push(item.height)
+                    var layer = '<img src="'+ imgSrcUrl+item.name +'.png" width="'+ item.width/2+'" id="'+item.name + '" class="image"  style="left:'+item.left/2+'px;'+'top:'+item.top/2 +  'px;"  lt="'+(item.left/PSD_WIDTH).toFixed(2) +'/'+ (item.top/PSD_WIDTH).toFixed(2) +'">\n';
+                    //_self.cssStyle+='.page_'+ _self.appName + ' .' + item.name +' { position: absolute; top:50%; width:'+ item.width/100 +'rem; height:'+ item.height/100 +'rem; left:'+ item.left/100 +'rem; margin-top:'+ -(_self.viewRect.height/100/2 - item.top/100) +'rem; background:url(../'+ (backGroundImgUrl+item.name) +'.png); background-size:100% auto; }\n';
                     content.append(layer);
                 }else if (item.type == "group" && item.visible){
-                    content.append('<div class="animate '+ item.name +'"></div>\n');
-                    content = content.find('.'+item.name);
+
+                    content.append('<div id="scroll_content"></div>\n');
+                    content = content.find('#scroll_content');
                     _self.createDivByJson(item);
                 }
                 //当前循环结束，重置$wrap
                 if ( i == childrenLen-1){
                     content = content.parent();
+                    content.find('#scroll_content').css('height',this.height[0]/2+'px')
                 }
             }
-        };
 
+        };
 
         /**
          * 查询所有子对象，倒序赋值
@@ -237,10 +246,10 @@ router.post('/page_index',function (req,res,next) {
         }
     }
     var exportPsdFile = new exportPSD();
-    exportPsdFile.start();
+        exportPsdFile.start();
 
 });
-router.post('/page_index/download',function (req,res,next) {
+router.post('/page_scroll/download',function (req,res,next) {
     var html = req.body.html;
     function delDir(path){
         let files = [];
@@ -257,43 +266,40 @@ router.post('/page_index/download',function (req,res,next) {
             fs.rmdirSync(path);
         }
     }
-    fs.readFile("./public/export/download/page_index/wwwroot/index.html", function (err, data) {
+    fs.readFile("./public/export/download/page_scroll/wwwroot/index.html", function (err, data) {
         var htmlString = data.toString();
         var $$ = cheerio.load(htmlString);
-        var $insertArea = $$("#wrap");
+        var $insertArea = $$("#swiperView");
         $insertArea.html(html);
-        fs.writeFile('./public/export/download/page_index/wwwroot/index.html',beautify_html($$.html(), { indent_size: 4, space_in_empty_paren: true }), {
+        fs.writeFile('./public/export/download/page_scroll/wwwroot/index.html',beautify_html($$.html(), { indent_size: 4, space_in_empty_paren: true }), {
         }, function (err) {
             if(err) throw err;
-            if(!err){
-                delDir('./public/export/download/page_index/wwwroot/assets/images');
+             if(!err){
+                 delDir('./public/export/download/page_scroll/wwwroot/images')
+                 fse.copy('./public/export/page_scroll/images', './public/export/download/page_scroll/wwwroot/images')
+                         .then(() => {
+                             fse.copy('./public/export/download/page_scroll/commonimages','./public/export/download/page_scroll/wwwroot/images')
+                                 .then(()=>{
+                                     compressing.zip.compressDir('./public/export/download/page_scroll/wwwroot', './public/export/download/page_scroll/wwwwroot.zip')
+                                         .then(()=>{
+                                             res.send({url:'/export/download/page_scroll/wwwwroot.zip'})
+                                         })
+                                         .catch()
+                                 })
+                                 .catch(error=>{
+                                     console.log(error)
+                                 })
 
-                fse.copy('./public/export/page_index/images', './public/export/download/page_index/wwwroot/assets/images')
-                    .then(() => {
-                        fse.copy('./public/export/download/page_index/commonimages','./public/export/download/page_index/wwwroot/assets/images')
-                            .then(()=>{
-                                fse.copy('./public/export/page_index/css','./public/export/download/page_index/wwwroot/assets/css').then(()=>{
-                                    compressing.zip.compressDir('./public/export/download/page_index/wwwroot', './public/export/download/page_index/wwwwroot.zip')
-                                        .then(()=>{
-                                            res.send({url:'/export/download/page_index/wwwwroot.zip'})
-                                        })
-                                        .catch()
-                                });
+                         })
+                         .catch(err => {
+                             console.error(err)
+                         })
+                 }
 
-                            })
-                            .catch(error=>{
-                                console.log(error)
-                            })
-
-                    })
-                    .catch(err => {
-                        console.error(err)
-                    })
-            }
         });
 
     });
 
 
 })
-module.exports=router;
+module.exports=router

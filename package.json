@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "compress-images": "^1.5.8",
     "compressing": "^1.4.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -15,7 +16,9 @@
     "fs-extra": "^8.1.0",
     "http-errors": "~1.6.3",
     "js-beautify": "^1.9.0-beta5",
+    "libvips": "0.0.2",
     "morgan": "~1.9.1",
+    "node-images": "^2.2.1",
     "psd": "^3.2.0",
     "rimraf": "^2.6.3",
     "uuid": "^3.3.2"

@@ -47,7 +47,7 @@
                 <div class="am-form-group">
                   <input type="text" class="" id="psd_path_3" placeholder="输入psd文件绝对路径">
                 </div>
-                <button class="am-btn am-btn-primary">
+                <button class="am-btn am-btn-primary" id="make_psd_3">
                   立即制作
                 </button>
               </div>
@@ -93,6 +93,7 @@
         </div>
       </div>
     </div>
+    
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/axios.min.js"></script>
     <script src="/assets/js/amazeui.min.js"></script>
@@ -137,7 +138,25 @@
                     });
             }
         });
-
+        $('#make_psd_3').on('click',function () {
+            var val= $(this).prev().find('input').val()
+            if(!val){
+                $('#my-alert').modal('open')
+            }else {
+                $('#my-modal-loading').modal('open')
+                axios.post('/page_scroll', {
+                    path:val
+                })
+                    .then(function (response) {
+                        if(response.status == 200){
+                            window.location.href = response.data.url
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        });
     </script>
   </body>
 </html>

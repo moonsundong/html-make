@@ -23,6 +23,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/',require('./API/page_turning/index'));
 app.use('/',require('./API/page_index/index'));
+app.use('/',require('./API/page_scroll/index'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
