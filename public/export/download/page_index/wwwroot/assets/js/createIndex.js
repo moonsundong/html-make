@@ -38,7 +38,7 @@ createIndexHtml.prototype.resetDiv=function () {
         $(item).css('top',top/that.h*100+'%');
     })
 };
-new createIndexHtml('.wrap',1920,1040);
+new createIndexHtml('.wrap',1920,1080);
 var  animateSet={};
 function animateReset(){
     var aniFunStr='';

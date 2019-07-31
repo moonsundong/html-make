@@ -267,7 +267,6 @@ router.post('/page_index/download',function (req,res,next) {
             if(err) throw err;
             if(!err){
                 delDir('./public/export/download/page_index/wwwroot/assets/images');
-
                 fse.copy('./public/export/page_index/images', './public/export/download/page_index/wwwroot/assets/images')
                     .then(() => {
                         fse.copy('./public/export/download/page_index/commonimages','./public/export/download/page_index/wwwroot/assets/images')

@@ -111,7 +111,7 @@
         localStorage.setItem('phoneData',$('.wrap').html())
     });
     $('#show_ele').on('click',function () {
-        $('.wrap .swiper-slide').eq(mySwiper.activeIndex).find('.dn').removeClass('dn')
+        $('.dn').removeClass('dn')
         localStorage.setItem('phoneData',$('.wrap').html())
     });
     $('#copy_ele').on('click',function () {
