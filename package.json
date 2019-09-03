@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "pro": "node --max_old_space_size=9000 build/build.js "
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
@@ -22,5 +23,8 @@
     "psd": "^3.2.0",
     "rimraf": "^2.6.3",
     "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "increase-memory-limit": "^1.0.7"
   }
 }

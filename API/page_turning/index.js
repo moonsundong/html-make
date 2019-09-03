@@ -181,7 +181,7 @@ router.post('/page_turning',function (req,res,next) {
             for (var i=0; i<domJSON.children.length; i++){
                 var item = domJSON.children[i];
                 if (item.type == "layer" && item.visible && item.width && item.height){
-                    var layer = '<img src="'+ imgSrcUrl+item.name +'.png" class="image animate"  style="left:'+item.left+'px;'+'top:'+item.top +  'px;"  lt="'+(item.left/PSD_WIDTH).toFixed(2) +'/'+ (item.top/PSD_WIDTH).toFixed(2) +'">\n';
+                    var layer = '<img src="'+ imgSrcUrl+item.name +'.png" class="image animate"  style="left:'+item.left/2+'px;'+'top:'+item.top/2 +  'px;'+'width:'+item.width/2 +  'px;"  lt="'+(item.left/PSD_WIDTH).toFixed(2) +'/'+ (item.top/PSD_WIDTH).toFixed(2) +'">\n';
                     //_self.cssStyle+='.page_'+ _self.appName + ' .' + item.name +' { position: absolute; top:50%; width:'+ item.width/100 +'rem; height:'+ item.height/100 +'rem; left:'+ item.left/100 +'rem; margin-top:'+ -(_self.viewRect.height/100/2 - item.top/100) +'rem; background:url(../'+ (backGroundImgUrl+item.name) +'.png); background-size:100% auto; }\n';
                     content.append(layer);
                 }else if (item.type == "group" && item.visible){

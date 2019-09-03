@@ -7,7 +7,7 @@
     var LOOP;
     if(localStorage.getItem('phoneData')){
         swal({
-            title: '是否恢复最近的操作金鹿?',
+            title: '是否恢复最近的操作记录?',
             text: "",
             type: 'warning',
             showCancelButton: true,
@@ -35,12 +35,12 @@
             var aniFunStr='';
             var loopFunStr='';
             $(item).find('.animate').each(function () {
-                if($(this).width()>=750 && $(this).height()>=1460){
+                if($(this).width()>= 750 && $(this).height()>=1460){
                     $(this).removeClass('animate')
                 }else {
                     var imgSrc=$(this).attr('src');
-                    var  animate = $(this).attr('animate') || 'transition.bounceUpIn';
-                    var  duration = $(this).attr('duration') || 750;
+                    var  animate = $(this).attr('animate') || 'transition.expandIn';
+                    var  duration = $(this).attr('duration') || 1000;
                     var  delay = $(this).attr('delay') || 500;
                     if(animate){
                         aniFunStr+= `$('[src="`+imgSrc+`"]').velocity("`+animate+`",{duration:`+duration+`,delay:`+delay+`});`
@@ -142,6 +142,11 @@
         e.preventDefault();
        $("#phone").find("img").removeClass('act');
        $(this).addClass('act');
+
+       $('#animate-attr-show').html('animate:'+ $(this).attr('animate')+'<br>'+
+           'duration:'+  $(this).attr('duration')+'<br>'+
+           'delay:'+  $(this).attr('delay')+'<br>'+
+           'animateloop:'+  $(this).attr('animateloop')+'<br>')
    });
     /*复制动画*/
     $('#copy_animate').on('click',function (e) {
@@ -152,12 +157,31 @@
         var animateLoop = $('.act').attr('animateLoop') || null;
         CLONE_ANI={
             animate:{
-                delay:delay || 500,duration:duration || 500,animate:animate || 'transition.bounceUpIn'
+                delay:delay || 500,duration:duration || 1000,animate:animate || 'transition.bounceUpIn'
             },
             animateLoop:animateLoop
         };
         console.log(CLONE_ANI)
     });
+
+    $('#copy_animate_noDelay').on('click',function (e) {
+        e.preventDefault();
+        var animate = $('.act').attr('animate');
+        var duration = $('.act').attr('duration');
+
+        var animateLoop = $('.act').attr('animateLoop') || null;
+        CLONE_ANI={
+            animate:{
+               duration:duration || 500,animate:animate || 'transition.bounceUpIn'
+            },
+            animateLoop:animateLoop
+        };
+        console.log(CLONE_ANI)
+    });
+    /*恢复动画*/
+    $('#apply_animate_back').on('click',function () {
+        $('.act').addClass('animate')
+    })
     /*复制应用动画*/
     $('#apply_animate').on('click',function (e) {
         e.preventDefault();
@@ -388,8 +412,8 @@
 
         $('#swiperView').children('.swiper-slide').each(function (index,item) {
             var delay=0;
-            var setDelay = parseInt($('#ai_delay').val()) || 750
-            var duration = parseInt($('#ai_duration').val()) || 1000;
+            var setDelay = parseInt($('#ai_delay').val()) || 350
+            var duration = parseInt($('#ai_duration').val()) || 750;
             var domSave = []
             $(item).find('.animate').each(function () {
                 var h = $(this).height();
