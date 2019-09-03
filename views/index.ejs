@@ -151,8 +151,9 @@
             }
         });
         $('#make_psd_2').on('click',function () {
-            var val= checkPath($(this).prev().find('input').val());
+            var val= $(this).prev().find('input').val();
             var check= checkPath( $(this).prev().find('input').val())
+
             if(!check.res){
                 $('#my-alert').modal('open')
             }else {
@@ -172,8 +173,9 @@
             }
         });
         $('#make_psd_3').on('click',function () {
-            var val= checkPath($(this).prev().find('input').val());
+            var val= $(this).prev().find('input').val();
             var check= checkPath( $(this).prev().find('input').val())
+
             if(!check.res){
                 $('#my-alert').modal('open')
             }else {

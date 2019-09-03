@@ -21,6 +21,7 @@ var url ='/';
 
 router.post('/page_index',function (req,res,next) {
     var pspath = req.body.path;
+    console.log(pspath)
     class exportPSD {
         constructor(){
             this.exportPath = "./public/export/";
