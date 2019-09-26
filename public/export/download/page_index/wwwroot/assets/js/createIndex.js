@@ -5,31 +5,28 @@ function createIndexHtml(el,w,h) {
     this.createResponse();
     this.resetDiv();
 }
-
+console.log(document.body.clientWidth)
 createIndexHtml.prototype.createResponse = function () {
     var that = this;
     $(window).resize(function () {
+        var w = window.innerWidth || document.body.clientWidth;
         that.el.css({
-            'width':window.innerWidth,
-            'height':window.innerWidth*that.h/that.w
+            'width':w,
+            'height':w*that.h/that.w
         })
     });
-
     that.el.css({
-        'width':window.innerWidth,
-        'height':window.innerWidth*that.h/that.w
+        'width':window.innerWidth || document.body.clientWidth,
+        'height':(window.innerWidth || document.body.clientWidth)*that.h/that.w
     })
 };
 
-
 createIndexHtml.prototype.resetDiv=function () {
     var that = this;
-    console.log(this)
     $(that.el).find('div').each(function (index,item) {
-        console.log(item)
         var height = $(item).height();
         var width = $(item).width();
-        console.log(height,width)
+
         var left =parseInt($(item).css('left'));
         var top =parseInt($(item).css('top'));
         $(item).css('height',height/that.h*100+'%');
@@ -49,9 +46,10 @@ function animateReset(){
         var  duration = $(item).attr('duration') || 1000;
         var  delay = $(item).attr('delay') || 750;
         if(animate){
-            aniFunStr+= `$('[id="`+id+`"]').velocity("`+animate+`",{duration:`+duration+`,delay:`+delay+`});`
+            aniFunStr+= '$(\'[id=\"'+id+'\"]\').velocity(\"'+animate+'\",{duration:'+duration+',delay:'+delay+'});'
         }
     });
+
     $('.loop').each(function (index,item) {
         if($(this).attr('animateLoop')){
             var id = $(item).attr('id');
@@ -61,7 +59,7 @@ function animateReset(){
             }else {
                 var animate = JSON.stringify(loopObj.animate);
                 var opt= JSON.stringify(loopObj.opt);
-                loopFunStr+= `$('[id="`+id+`"]').velocity(`+animate+`,`+opt+`);`
+                loopFunStr+= '$(\'[id=\"'+id+'\"]\').velocity('+animate+','+opt+');'
             }
         }
     });
